@@ -32,9 +32,9 @@ jobs:
     executor: python_alpine_executor
     steps:
       - checkout
-      - add_ssh_keys:
-          # You can get this ID in the section where you registered the SSH Key
-          fingerprints: ["fd:cd:84:87:be:c3:48:6c:30:7e:31:23:bf:02:6f:1a"]
+      # - add_ssh_keys:
+      #     # You can get this ID in the section where you registered the SSH Key
+      #     fingerprints: ["fd:cd:84:87:be:c3:48:6c:30:7e:31:23:bf:02:6f:1a"]
       - run:
           name: Install Ansible
           command: |
