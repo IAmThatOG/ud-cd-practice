@@ -3,7 +3,7 @@
   # hosts: ubuntu
   # Use the public IP if the VM is already created
   hosts: all
-  gather_facts: f alse
+  gather_facts: false
   user: ubuntu
   become: true
   become_method: sudo
