@@ -1,5 +1,2 @@
 [all]
 52.23.163.237
-
-[all:vars]
-ansible_ssh_private_key_file=.ssh/ud-keypair.cer
