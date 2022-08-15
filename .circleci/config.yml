@@ -9,6 +9,9 @@ executors:
   aws_cli_executor:
     docker:
       - image: amazon/aws-cli
+  python_alpine_executor:
+    docker:
+      - image: python:3.7-alpine3.11
 
 # Define the jobs we want to run for this project
 jobs:
@@ -23,9 +26,28 @@ jobs:
               --template-file infrastructure/template.yml \
               --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
               --region us-east-1
+
+  # Exercise: Config and Deployment
+  configure_infrastructure:
+    executor: python_alpine_executor
+    steps:
+      - checkout
+      - add_ssh_keys:
+          # You can get this ID in the section where you registered the SSH Key
+          fingerprints: ["fd:cd:84:87:be:c3:48:6c:30:7e:31:23:bf:02:6f:1a"]
+      - run:
+          name: Install Ansible
+          command: |
+            apk add --update ansible
+      - run:
+          name: Run Playbook and Configure server
+          command: |
+            ansible-playbook -i [inventory-file] [playbook-file]
+
 # Sequential workflow
 workflows:
   # Name the workflow
   myWorkflow:
     jobs:
-      - create_infrastructure
+      # - create_infrastructure
+      - configure_infrastructure
