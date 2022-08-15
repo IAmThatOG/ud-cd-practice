@@ -8,33 +8,34 @@
   become: true
   apt:
     upgrade: true
-# - name: remove dependencies that are no longer required
-#   become: true
-#   apt:
-#     autoremove: true
 
-# - name: install dependencies
-#   become: true
-#   apt:
-#     name: ["nodejs", npm]
-#     state: latest
-#     update_cache: true
+- name: remove dependencies that are no longer required
+  become: true
+  apt:
+    autoremove: true
 
-# - name: install pm2
-#   become: true
-#   shell: |
-#     npm install pm2 -g
+- name: install dependencies
+  become: true
+  apt:
+    name: ["nodejs", npm]
+    state: latest
+    update_cache: true
 
-# - name: create directory
-#   file:
-#     path: ~/web
-#     state: directory
+- name: install pm2
+  become: true
+  shell: |
+    npm install pm2 -g
 
-# - name: copy index.js
-#   template:
-#     src: files/index.js
-#     dest: ~/web/index.js
+- name: create directory
+  file:
+    path: ~/web
+    state: directory
 
-# - name: start server
-#   shell: |
-#     pm2 start ~/web/index.js -f
+- name: copy index.js
+  template:
+    src: files/index.js
+    dest: ~/web/index.js
+
+- name: start server
+  shell: |
+    pm2 start ~/web/index.js -f
