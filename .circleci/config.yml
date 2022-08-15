@@ -37,7 +37,7 @@ jobs:
       #     fingerprints: ["fd:cd:84:87:be:c3:48:6c:30:7e:31:23:bf:02:6f:1a"]
       - run:
           name: view files
-          command: ls -lah
+          command: ls -lah .ssh
       - run:
           name: Install Ansible
           command: |
