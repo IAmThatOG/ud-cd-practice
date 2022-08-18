@@ -9,18 +9,24 @@ executors:
   aws_cli_executor:
     docker:
       - image: amazon/aws-cli #image for creating infrastructure on AWS
+
   python_alpine_executor:
     docker:
       - image: python:3.7-alpine3.16 #image for installing ansible and configuring infrastructure
+
   alpine_executor:
     docker:
       - image: alpine:latest
+
+  alpine_aws_executor:
+    docker:
+      - image: alpine:latest
+      - image: amazon/aws-cli
 
 commands:
   # Exercise - Rollback
   destroy_environment:
     description: Deletes Cloudformation stack
-    executor: aws_cli_executor
     steps:
       - run:
           name: Destroy environment
@@ -64,7 +70,7 @@ jobs:
             ansible-playbook -i inventory.txt main.yml
 
   smoke_test:
-    executor: alpine_executor
+    executor: alpine_aws_executor
     steps:
       - run:
           name: Install curl for http calls
