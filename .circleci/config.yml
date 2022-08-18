@@ -11,7 +11,7 @@ executors:
       - image: amazon/aws-cli
   python_alpine_executor:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: python:3.7-alpine3.16
 
 # Define the jobs we want to run for this project
 jobs:
@@ -38,9 +38,9 @@ jobs:
       - run:
           name: Install Ansible
           command: apk add --update ansible
-      - run:
-          name: Install SSH
-          command: apk add --update --no-cache openssh
+      # - run:
+      #     name: Install SSH
+      #     command: apk add --update --no-cache openssh
       - run:
           name: Run Playbook and Configure server
           command: |
