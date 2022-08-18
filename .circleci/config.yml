@@ -20,6 +20,7 @@ commands:
   # Exercise - Rollback
   destroy_environment:
     description: Deletes Cloudformation stack
+    executor: aws_cli_executor
     steps:
       - run:
           name: Destroy environment
