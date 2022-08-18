@@ -36,13 +36,11 @@ jobs:
           # You can get this ID in the section where you registered the SSH Key
           fingerprints: ["fd:cd:84:87:be:c3:48:6c:30:7e:31:23:bf:02:6f:1a"]
       - run:
-          name: view files
-          command: ls -lah
-      - run:
           name: Install Ansible
-          command: |
-            apk add --update ansible
-            apk add --update --no-cache openssh
+          command: apk add --update ansible
+      - run:
+          name: Install SSH
+          command: apk add --update --no-cache openssh
       - run:
           name: Run Playbook and Configure server
           command: |
@@ -53,5 +51,5 @@ workflows:
   # Name the workflow
   myWorkflow:
     jobs:
-      # - create_infrastructure
-      - configure_infrastructure
+      - create_infrastructure
+      # - configure_infrastructure
