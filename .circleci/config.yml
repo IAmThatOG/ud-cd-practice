@@ -38,7 +38,7 @@ jobs:
       - run:
           name: Install Ansible
           command: apk add --update ansible
-      # - run:
+      # - run: # only run this command for lower python-alpine image version
       #     name: Install SSH
       #     command: apk add --update --no-cache openssh
       - run:
@@ -51,5 +51,5 @@ workflows:
   # Name the workflow
   myWorkflow:
     jobs:
-      # - create_infrastructure
-      - configure_infrastructure
+      - create_infrastructure
+      # - configure_infrastructure
