@@ -41,7 +41,8 @@ jobs:
       - run:
           name: Install Ansible
           command: |
-            apk add --update ansible ssh
+            apk add --update ansible
+            apk add --update ssh
       - run:
           name: Run Playbook and Configure server
           command: |
