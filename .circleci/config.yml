@@ -42,7 +42,7 @@ jobs:
           name: Install Ansible
           command: |
             apk add --update ansible
-            apk add --update ssh
+            apk add --update --no-cache openssh
       - run:
           name: Run Playbook and Configure server
           command: |
