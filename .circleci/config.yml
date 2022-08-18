@@ -18,11 +18,6 @@ executors:
     docker:
       - image: alpine:latest
 
-  alpine_aws_executor:
-    docker:
-      - image: alpine:latest
-      - image: amazon/aws-cli
-
 commands:
   # Exercise - Rollback
   destroy_environment:
@@ -70,7 +65,7 @@ jobs:
             ansible-playbook -i inventory.txt main.yml
 
   smoke_test:
-    executor: alpine_aws_executor
+    executor: aws_cli_executor
     steps:
       - run:
           name: Install curl for http calls
