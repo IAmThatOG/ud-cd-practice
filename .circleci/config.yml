@@ -16,6 +16,19 @@ executors:
     docker:
       - image: alpine:latest
 
+commands:
+  # Exercise - Rollback
+  destroy_environment:
+    description: Deletes Cloudformation stack
+    steps:
+      - run:
+          name: Destroy environment
+          # ${CIRCLE_WORKFLOW_ID} is a Built-in environment variable
+          # ${CIRCLE_WORKFLOW_ID:0:5} takes the first 5 chars of the variable CIRCLE_CI_WORKFLOW_ID
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7}
+
 # Define the jobs we want to run for this project
 jobs:
   create_infrastructure:
@@ -27,7 +40,7 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file infrastructure/template.yml \
-              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} \
               --region us-east-1
 
   # Exercise: Config and Deployment
@@ -58,7 +71,7 @@ jobs:
       - run:
           name: Smoke Test
           command: |
-            URL="https://blog.udacity.com/"
+            URL="https://blog.udacity123.com/"
             # Test if website exists
             if curl -s --head ${URL} 
             then
@@ -66,12 +79,13 @@ jobs:
             else
               return 1
             fi
+      - destroy_environment
 
 # Sequential workflow
 workflows:
   # Name the workflow
   myWorkflow:
     jobs:
-      # - create_infrastructure
+      - create_infrastructure
       # - configure_infrastructure
       - smoke_test
