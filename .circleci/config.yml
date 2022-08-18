@@ -8,10 +8,13 @@ version: 2.1
 executors:
   aws_cli_executor:
     docker:
-      - image: amazon/aws-cli
+      - image: amazon/aws-cli #image for creating infrastructure on AWS
   python_alpine_executor:
     docker:
-      - image: python:3.7-alpine3.16
+      - image: python:3.7-alpine3.16 #image for installing ansible and configuring infrastructure
+  alpine_executor:
+    docker:
+      - image: alpine:latest
 
 # Define the jobs we want to run for this project
 jobs:
@@ -46,10 +49,29 @@ jobs:
           command: |
             ansible-playbook -i inventory.txt main.yml
 
+  smoke_test:
+    executor: alpine_executor
+    steps:
+      - run:
+          name: Install curl for http calls
+          command: apk add --update curl
+      - run:
+          name: Smoke Test
+          command: |
+            URL="https://blog.udacity.com/"
+            # Test if website exists
+            if curl -s --head ${URL} 
+            then
+              return 0
+            else
+              return 1
+            fi
+
 # Sequential workflow
 workflows:
   # Name the workflow
   myWorkflow:
     jobs:
       # - create_infrastructure
-      - configure_infrastructure
+      # - configure_infrastructure
+      - smoke_test
