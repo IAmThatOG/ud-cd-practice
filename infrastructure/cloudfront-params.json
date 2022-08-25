@@ -1,0 +1,6 @@
+[
+    {
+        "ParameterKey": "PipelineID",
+        "ParameterValue": "ud-s3-bucket"
+    }
+]
