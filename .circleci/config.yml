@@ -93,6 +93,7 @@ jobs:
       - run:
           name: Execute bucket.yml - Create Cloudformation Stack
           command: |
+            pwd
             ls -lah
             aws cloudformation deploy \
             --template-file ./infrastructure/s3bucket.yml \
@@ -101,7 +102,7 @@ jobs:
       # Uncomment the step below if yoou wish to upload all contents of the current directory to the S3 bucket
       - run:
           name: Copy html file to s3
-          command: aws s3 sync ./index.html s3://mybucket-${CIRCLE_WORKFLOW_ID:0:7} --delete
+          command: aws s3 sync index.html s3://mybucket-${CIRCLE_WORKFLOW_ID:0:7} --delete
 
   # Fetch and save the pipeline ID (bucket ID) responsible for the last release.
   get_last_deployment_id:
